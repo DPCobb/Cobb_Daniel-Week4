@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <script src="js/lib/jquery-1.12.4.min.js"></script>
+    <script src="https://fb.me/react-15.1.0.min.js"></script>
+    <script src="https://fb.me/react-dom-15.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <header>
+        <img src="images/Reactjs_Logo.svg" title="React Logo"/>
+        <h1>React.js Demo</h1>
+    </header>
+    <section>
+        <h2>What is React.js?</h2>
+        <p>React is a JavaScript framework that makes designing User Interfaces easier and designing them
+            around changes in data simpler. For the most part, React is focused on the View in MVC. Websites, like AirBnB,
+            use React for specific parts of their website (AirBnB uses React to create the search functionality) and some
+            use it for the entire site design.</p>
+        <p> React aims to keep large scale applications simple and responsive to changes in data. React will change and render
+            the User Interface based on data changes and specifically for the components effected. These components are
+            highly reusable, easy to test, and easy to maintain. Facebook and Instagram have relied on React to construct
+            thousands of components for their platforms.</p>
+        <p>React takes a little time to get used to, it feels weird and bulky at first, but after a few minutes it
+            starts to sink in and become pretty easy to get the hang of. Using JavaScript XML (JSX) is a plus that really
+            simplifies what you are doing, but requires a tool like Babel to work. The examples below utilize JSX.</p>
+    </section>
+    <section>
+        <h2>Creating Components</h2>
+        <p>React.js is based around building components for User Interfaces. Thinking about React from an Atomic Design
+            standpoint makes the purpose of React a little easier to grasp. You build out component parts, Atoms, then
+            combine those pieces to make components, Molecules, and render them into Organisms.<p>
+        <pre><code>
+            <span>Hello World Demo</span>
+
+            <span>// Creating the Hello Message Atom</span>
+            var HelloMessage = React.createClass({
+                render: function() {
+                    return &lt;h1>Hello {this.props.name}&lt;/h1>
+                }
+            });
+
+            <span>// Creating the Goodbye Message Atom</span>
+            var GoodbyeMessage = React.createClass({
+                render: function() {
+                    return &lt;h1>Bye {this.props.name}&lt;/h1>
+                }
+            });
+
+            <span>// Combining Hello and Goodbye into the Message Molecule</span>
+            var Message = React.createClass({
+                render: function() {
+                    return &lt;div>
+                        &lt;HelloMessage name={this.props.name} /> &lt;GoodbyeMessage name={this.props.name} />
+                    &lt;/div>
+                }
+            });
+
+            <span>// Rendering the Molecule into the Organism, the hello &lt;div></span>
+            ReactDOM.render(&lt;Message name="daniel" />, document.getElementById('hello'));
+        </code></pre>
+        <h3>Output for Hello World:</h3>
+        <div id="hello"></div>
+    </section>
+    <section>
+        <h2>Working With Outside Data</h2>
+        <p>It is easy to add information from JSON into React Components. You pass this information along
+            using props from the Molecule down to the Atom. The property value is set to the data variable when
+            rendering the Molecule and accessed via this.props.</p>
+        <pre><code>
+            <span>JSON Demo</span>
+
+            <span>// Set outside Data into Variable</span>
+            var data = [
+                {id: 1, author: "John Smith", title: "This is my post"},
+                {id: 2, author: "Jane Doe", title: "This is a better post"}
+            ];
+
+            <span>// Create the Posts Atom</span>
+             var Posts = React.createClass({
+                 render: function(){
+                     var postList = this.props.data.map(function(postData) {
+                         return (
+                             &lt;li>&lt;h2>{postData.title}&lt;/h2>&lt;p>{postData.author}&lt;/p>&lt;/li>
+                         )
+                     });
+                 return (
+                     &lt;ul>
+                     {postList}
+                     &lt;/ul>
+                 );
+                }
+             });
+
+            <span>// Create the PostDisplay Molecule</span>
+             var PostDisplay = React.createClass({
+                 render: function(){
+                     return (
+                         &lt;Posts data = {this.props.data}/>
+                     )
+                 }
+             });
+
+             <span>// Render to Organism</span>
+             ReactDOM.render(&lt;PostDisplay data={data} />, document.getElementById('postsBox'));
+        </code></pre>
+        <h3>Output for JSON Demo:</h3>
+        <div id="postsBox"></div>
+    </section>
+    <script type="text/babel">
+        // Create Component parts (Atoms) First by naming a variable with a React.createClass object
+        var HelloMessage = React.createClass({
+            render: function() {
+                return <h2>Hello {this.props.name}</h2>
+            }
+        });
+        var GoodbyeMessage = React.createClass({
+            render: function() {
+                return <h2>Bye {this.props.name}</h2>
+            }
+        });
+        // Place parts (Atoms) into the Component (molecule). If combining more than one part they must be in
+        // a wrapper of some kind, <div>.
+        var Message = React.createClass({
+            render: function() {
+                return <div>
+                    <HelloMessage name={this.props.name} /> <GoodbyeMessage name={this.props.name} />
+                </div>
+            }
+        });
+        // Render the Component. < Component />, location to render.
+        ReactDOM.render(<Message name="daniel" />, document.getElementById('hello'));
+
+        // Passing outside Data into Component
+        var data = [
+            {id: 1, author: "John Smith", title: "This is my post"},
+            {id: 2, author: "Jane Doe", title: "This is a better post"}
+        ];
+         var Posts = React.createClass({
+             render: function(){
+                 var postList = this.props.data.map(function(postData) {
+                     return (
+                         <li><h2>{postData.title}</h2><p>{postData.author}</p></li>
+                     )
+                 });
+             return (
+                 <ul>
+                 {postList}
+                 </ul>
+             );
+            }
+         });
+
+         var PostDisplay = React.createClass({
+             render: function(){
+                 return (
+                     <Posts data = {this.props.data}/>
+                 )
+             }
+         });
+         ReactDOM.render(<PostDisplay data={data} />, document.getElementById('postsBox'));
+    </script>
+    <section>
+        <h2>Props, State, and Events</h2>
+        <p>Props are simply just properties passed along to components and accessed using this.props and the property name.
+        This allows data to be passed into the component.</p>
+        <p>State allows you to create dynamic components. Using getInitialState returns the initial state of the component.
+            Using this.state accesses the current state of the component. To update the state you use setState.</p>
+        <p>Events allow you to set a prop to a function. Using an inline onClick event will allow you to bind an action to the event.</p>
+        <pre><code>
+            <span>Event Demo</span>
+
+            <span>// Create the alert and render function to bind the alert to onClick</span>
+            var AlertTest = React.createClass({
+                alertBox: function(evt){
+                    alert('This was called with an event');
+                },
+                render: function(){
+                    return &lt;div onClick={this.alertBox}>
+                    Click Me!
+                    &lt;/div>;
+                }
+            });
+
+            <span>// Render to events &lt;div></span>
+            ReactDOM.render(&lt;AlertTest />, document.getElementById('events'));
+
+        </code></pre>
+        <h3>Output for Event Demo</h3>
+        <div id="events"></div>
+        <pre><code>
+            <span>// State Demo</span>
+            <span>// Create the Counter Component</span>
+            var Counter = React.createClass({
+                <span>// User getInitialState to set clicks to 0</span>
+                getInitialState: function(){
+                    return {clicks: 0};
+                },
+                <span>// Add 1 to click counter with setState</span>
+                onCounterClick: function(evt){
+                    this.setState({
+                        clicks: this.state.clicks + 1
+                    });
+                },
+                render: function(){
+                    <span>// Bind onCounterClick to an onClick event</span>
+                    return(
+                        &lt;div>
+                        &lt;p>Clicks: {this.state.clicks}&lt;/p>
+                        &lt;button onClick={this.onCounterClick}>Counter&lt;/button>
+                        &lt;/div>
+                    );
+                }
+            });
+            <span>// Render to state &lt;div></span>
+            ReactDOM.render(&lt;Counter />, document.getElementById('state'));
+
+        </pre></code>
+        <h3>Output for State Demo</h3>
+        <div id="state"></div>
+
+        <script type="text/babel">
+            var AlertTest = React.createClass({
+                alertBox: function(evt){
+                    alert('This was called with an event');
+                },
+                render: function(){
+                    return <div onClick={this.alertBox}>
+                    Click Me!
+                    </div>;
+                }
+            });
+            ReactDOM.render(<AlertTest />, document.getElementById('events'));
+
+            var Counter = React.createClass({
+                getInitialState: function(){
+                    return {clicks: 0};
+                },
+                onCounterClick: function(evt){
+                    this.setState({
+                        clicks: this.state.clicks + 1
+                    });
+                },
+                render: function(){
+                    return(
+                        <div>
+                        <p>Clicks: {this.state.clicks}</p>
+                        <button onClick={this.onCounterClick}>Counter</button>
+                        </div>
+                    );
+                }
+            });
+            ReactDOM.render(<Counter />, document.getElementById('state'));
+        </script>
+        <h2>Additional Sources</h2>
+        <ul>
+            <li><a href="https://facebook.github.io/react/docs/getting-started.html" title="React Guide">React.js</a></li>
+            <li><a href="http://buildwithreact.com/" title="Build with React">Build With React</a></li>
+            <li><a href="https://github.com/facebook/react/wiki/Examples" title="React GitHub Examples">React GitHub Examples</a></li>
+        </ul>
+    </section>
+</body>
+</html>

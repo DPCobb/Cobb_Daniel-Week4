@@ -1,0 +1,63 @@
+@import url(https://fonts.googleapis.com/css?family=Luckiest+Guy);
+body{
+    font:14pt/normal 'Helvetica', 'Arial', sans-serif;
+    background:rgb(34,34,34);
+    margin:0 auto;
+    padding:0;
+    color:#dbdbdb;
+}
+section{
+    width:86%;
+    padding:2%;
+    margin:0 auto;
+}
+#postsBox, #hello, #events, #state{
+    background:#eee;
+    width:86%;
+    border-radius:5px;
+    margin:2% auto;
+    font-size:.75em;
+    color:#222;
+    padding:2%;
+}
+ul{
+    list-style-type: none;
+}
+ul li p{
+    color: gray;
+}
+header{
+    background: rgb(34,34,34);
+    padding:15px;
+}
+header h1, h2, h3{
+    display:inline-block;
+    color:#25d8fd;
+    margin:0;
+    vertical-align: top;
+}
+#postsBox h2, #hello h2{
+    color:#222;
+    display:block;
+}
+img[title="React Logo"]{
+    width:2.5%;
+}
+pre{
+    font-size:.75em;
+    background:#eee;
+    width:90%;
+    border-radius:5px;
+    margin:2% auto;
+}
+code{
+    font-size:.75em;
+    color:#222;
+}
+pre span{
+    color:#015566;
+    font-weight:700;
+}
+a{
+    color:inherit;
+}
